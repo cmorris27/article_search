@@ -1,0 +1,37 @@
+{
+  "name": "chase",
+  "version": "1.0.0",
+  "description": "A simple cucumber test framework in cypress",
+  "main": "index.js",
+  "scripts": {
+    "open:cypress": "cypress open",
+    "test": "cypress run",
+    "test:article_search:tag": "npx cypress-tags run -e TAGS='@article_search' --headless --browser chrome"
+  },
+  "keywords": [
+    "cucumber",
+    "cypress",
+    "javascript",
+    "gherkin"
+  ],
+  "author": "Chris Morris",
+  "license": "ISC",
+  "cypress-cucumber-preprocessor": {
+    "stepDefinitions": "cypress/integration",
+    "nonGlobalStepDefinitions": true,
+    "cucumberJson": {
+      "generate": true,
+      "outputFolder": "cypress/cucumber-json",
+      "filePrefix": "",
+      "fileSuffix": ".cucumber"
+    }
+  },
+  "dependencies": {
+    "cypress": "^10.6.0",
+    "cypress-cucumber-preprocessor": "^4.3.0",
+    "multiple-cucumber-html-reporter": "^1.18.3"
+  },
+  "devDependencies": {
+    "cypress-iframe": "^1.0.1"
+  }
+}
