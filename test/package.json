@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "open:cypress": "cypress open",
-    "test": "cypress run --headed --browser chrome",
-    "test:article_search:tag": "npx cypress-tags run -e TAGS='@article_search' --headless --browser chrome"
+    "test:chrome": "cypress run --headed --browser chrome"
   },
   "keywords": [
     "cucumber",
