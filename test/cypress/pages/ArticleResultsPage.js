@@ -4,14 +4,18 @@ class ArticleResultsPage {
 
     elements = {
         firstHeadlineText: () => cy.get('section[data-link-name*="container-1"] .js-headline-text'),
-        // googleGDPRButtons: () => cy.get('button'),
-        // googleSearchInput: () => cy.get('input[name="q"]'),
+        results: () => cy.get('#search .g [data-sokoban-container]'),
+        iframe: () => cy.get('[id="sp_message_container_658013"] iframe'),
+        searchResults: () => cy.get('#search h3:not([role="heading"])'),
     }
 
     acceptGDPR() {
-        cy.get('[id="sp_message_container_658013"] iframe')
-            .its('0.contentDocument')
-            .its('body')
+        const iframeContent = '0.contentDocument';
+        const iframeBody = 'body';
+
+        this.elements.iframe()
+            .its(iframeContent)
+            .its(iframeBody)
             .then(cy.wrap)
             .find('.message-component.message-row .btn-primary').should('be.visible')
             .click();
@@ -53,15 +57,20 @@ class ArticleResultsPage {
         });
     }
 
+    verifyResultsIncludeHrefToArticle() {
+        this.elements.results().each(link => {
+            expect(link.html().includes('href'));
+        });
+    }
+
     verifyKeywordPartiallyMatchesSearchResult(count, threshold) {
         const phrase = Cypress.env('headline').replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
         const mySet1 = new Set(['and', 'of', 'a', 'an', 'on', 'in']);
         const keywords = phrase.split(' ').filter(word => !mySet1.has(word));
 
         let accepted = 0
-        cy.get('#search h3:not([role="heading"])').then(titles => {
+        this.elements.searchResults().then(titles => {
             titles.slice(0, count).each((_, $ele) => {
-                // counting the number of words from phrase that are in the title
                 let matched_words = 0;
                 keywords.forEach(word => {
                     if ($ele.innerText.includes(word)) {
@@ -80,10 +89,8 @@ class ArticleResultsPage {
             if (accepted) {
                 cy.log(`${accepted} titles matched out of ${parseInt(count)}`)
                 cy.log(`***POSSIBLE FAKE NEWS FOUND IN RESULTS*** - ${accepted} titles matched out of ${parseInt(count)}`);
-                // expect(accepted).to.equals(parseInt(count), `***POSSIBLE FAKE NEWS FOUND IN RESULTS*** ${accepted} titles matched out of ${parseInt(count)}`);
             } else {
                 cy.log(`${accepted} titles matched out of ${parseInt(count)}`)
-                // expect(accepted).to.equals(parseInt(count), `***POSSIBLE FAKE NEWS FOUND IN RESULTS*** ${accepted} titles matched out of ${parseInt(count)}`);
             }
         })
     }

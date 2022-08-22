@@ -10,3 +10,6 @@ Feature: Confirm that news from https://www.theguardian.com/tone/news can be val
     When User performs a search on google for the saved headline
     Then log the matched words returned in the top "3" search results where threshold of "2" is applied
 
+  Scenario: Verify headline search results includes a url source
+    When User performs a search on google for the saved headline
+    Then Search results should include a url source
