@@ -4,8 +4,10 @@
   "description": "A simple cucumber test framework in cypress",
   "main": "index.js",
   "scripts": {
-    "open:cypress": "cypress open",
-    "test:chrome": "cypress run --headed --browser chrome"
+    "open:cypress:dev": "cypress open --env ENV=dev05",
+    "open:cypress:staging": "cypress open --env ENV=staging",
+    "test:chrome": "cypress run --headed --browser chrome",
+    "smoke:test:dev:run": "npx cypress-tags run -e TAGS='@smoke' --env ENV=dev05 --headless --browser chrome"
   },
   "keywords": [
     "cucumber",
@@ -28,7 +30,8 @@
   "dependencies": {
     "cypress": "^10.6.0",
     "cypress-cucumber-preprocessor": "^4.3.0",
-    "multiple-cucumber-html-reporter": "^1.18.3"
+    "multiple-cucumber-html-reporter": "^1.18.3",
+    "mocha": "^10.0.0"
   },
   "devDependencies": {
     "cypress-iframe": "^1.0.1"

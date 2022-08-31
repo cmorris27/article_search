@@ -1,15 +1,7 @@
-Feature: Confirm that news from https://www.theguardian.com/tone/news can be validated
-  As a User
-  I want to be able to validate a headline against a search engine
-  So that I can verify it's validity as to whether it is fake news or not
+Feature: Test authentication
 
-  Background:
-    Given User visits "tone/news" page and accepts on GDPR
-
-  Scenario: Verify headline from source can be validated against search engine
-    When User performs a search on google for the saved headline
-    Then log the matched words returned in the top "3" search results where threshold of "2" is applied
-
-  Scenario: Verify headline search results includes a url source
-    When User performs a search on google for the saved headline
-    Then Search results should include a url source
+  @smoke
+  Scenario: Test wp authentication
+    Given I am authenticated
+    And I create a new article via the wordpress endpoint
+    When User call GET on endpoint for newly created article

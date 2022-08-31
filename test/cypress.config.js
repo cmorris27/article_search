@@ -15,10 +15,12 @@ module.exports = defineConfig({
     failOnStatusCode: false,
     viewportWidth: 1280,
     viewportHeight: 800,
-    baseUrl: 'https://www.theguardian.com/',
+    baseUrl: 'http://thesun.local',
     retries: {
       runMode: 0,
     },
+    username: 'chris.morris2@news.co.uk',
+    password: 'Passw0rd1!',
   },
   e2e: {
     experimentalSessionAndOrigin: true,
