@@ -1,6 +1,6 @@
 import './commands'
-import {getAllPosts} from "../api/PostArticle/requests/GET.getPostsThenWriteToFile.request";
-import {deletePost} from "../api/PostArticle/requests/DELETE.deletePost.request";
+import {deletePost} from "../api/Posts/requests/DELETE.deletePost.request";
+import {getPosts} from "../api/Posts/requests/GET.getPosts.request";
 Cypress.on('window:before:load', (win) => {
     const original = win.EventTarget.prototype.addEventListener;
 
@@ -22,7 +22,10 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 });
 
 after(() => {
-    getAllPosts();
+    getPosts();
+    cy.get('@getPostsRequest').then((res) => {
+        cy.writeFile('cypress/fixtures/rundata/posts.json', res.body)
+    });
     cy.fixture('rundata/posts.json').then((data) => {
         let filtered_result = data.filter(obj => obj.parsely.meta.author[0].name.includes('Chris Morris'));
         for (let index in filtered_result) {

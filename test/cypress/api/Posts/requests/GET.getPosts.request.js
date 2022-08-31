@@ -13,6 +13,7 @@ function getPosts() {
         failOnStatusCode: false,
     }).as('getPostsRequest').then((res) => {
         Cypress.env('get_posts_request_body', JSON.stringify(res.body));
+        expect(res.status).to.eq(200);
         // cy.log('POST BODY===========>', JSON.stringify(res.body));
     });
 };

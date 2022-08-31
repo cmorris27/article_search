@@ -1,6 +1,6 @@
 const loginPage = require('../../../pages/LoginPage');
 import { sendPost } from "../requests/POST.SendPost.request";
-import { getPosts } from "../requests/GET.GetPosts.request";
+import { getPosts } from "../requests/GET.getPosts.request";
 Cypress.env('random_id', Math.floor(Math.random() * 10000000));
 
 describe("Creating a wordpress post", () => {
